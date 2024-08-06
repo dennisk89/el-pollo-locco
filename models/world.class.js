@@ -7,6 +7,9 @@ class World {
     camera_x = 0;
     statusBarHealth = new StatusbarHealth();
     statusBarBottle = new StatusbarBottle();
+    statusBarCoin = new StatusbarCoin();
+    throwableObject = [new ThrowableObject()];
+    
     
 
     constructor(canvas, keyboard) {
@@ -43,14 +46,18 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarCoin);
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         
         
+
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObject);
         this.ctx.translate(-this.camera_x, 0);
 
         //draw wird immer wieder aufgerufen

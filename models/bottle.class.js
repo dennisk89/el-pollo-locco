@@ -14,7 +14,7 @@ class Bottle extends MovableObject {
     }
 
     /**
-     * Starts the animation for the coin, changing images every 400 milliseconds
+     * Starts the animation for the coin, changing images every 300 milliseconds
      */
     animate() {
         setInterval(() => {
