@@ -4,6 +4,14 @@ class Coin extends MovableObject {
         'img_pollo_locco/img/8_coin/coin_2.png'
     ]
     width = 150;
+
+    offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
+        top: 50,
+        left: 50,
+        right: 50,
+        bottom: 50
+    };
+
     constructor(){
         super().loadImage('img_pollo_locco/img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES_MOVING)

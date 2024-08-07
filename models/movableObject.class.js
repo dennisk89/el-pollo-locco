@@ -17,19 +17,24 @@ class MovableObject extends DrawableObject {
 
 
     isAboveGround() {
+        if(this instanceof ThrowableObject){ // Throwable object should always fall
+            return true;
+        }else {
         return this.y < 100;
     }
-
-
-    isColliding(mo) {
-        // TODO coliding function anpassen damit die Gegner nicht zu früh gehittet werden
-
-        return (this.x - 50) + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
-
     }
+
+
+    // Bessere Formel zur Kollisionsberechnung (Genauer)
+isColliding (obj) {
+    
+    return  (this.x + this.width - this.offset.right) >= (obj.x + obj.offset.left) &&   //Pepe rechts von Chicken
+    (this.x + this.offset.left) <= (obj.x + obj.width - obj.offset.right) &&    //Pepe links von Chicken
+    (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top) &&   //Pepe unterhalb von Chicken
+    (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom)
+             // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
+}
 
 
     hit() {
@@ -73,6 +78,7 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
+        this.currentImage = 0;
         this.speedY = 30;
     }
 

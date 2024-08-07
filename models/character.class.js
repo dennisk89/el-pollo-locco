@@ -3,6 +3,14 @@ class Character extends MovableObject {
     width = 150
     y = 0
     speed = 10
+
+    offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
+        top: 140,
+        left: 20,
+        right: 30,
+        bottom: 20
+    };
+
     IMAGES_WALKING = [
         'img_pollo_locco/img/2_character_pepe/2_walk/W-21.png',
         'img_pollo_locco/img/2_character_pepe/2_walk/W-22.png',

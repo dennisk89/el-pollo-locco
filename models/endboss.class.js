@@ -3,7 +3,12 @@ class Endboss extends MovableObject {
     width = 250;
     y = 55
     
-    
+    offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
+        top: 10,
+        left: 10,
+        right: 10,
+        bottom: 10
+    };
     IMAGES_WALKING = [
         'img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png',
         'img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G2.png',
