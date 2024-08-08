@@ -60,11 +60,14 @@ class World {
 
 
     collectCoins(){
-        this.level.coins.forEach((coin) => {
+        this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 console.log('Colission Detected', coin);
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy)
+                if (this.character.coins < 5) {
+                    this.character.coins += 1;
+                    this.level.coins.splice(index, 1);
+                }
+                this.statusBarCoin.setPercentageCoin(this.character.coins)
                 console.log('Energy :' , this.character.energy)
             }
         })
@@ -72,12 +75,15 @@ class World {
 
 
     collectBottles(){
-        this.level.bottles.forEach((bottle) => {
+        this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 console.log('Colission Detected', bottle);
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy)
-                console.log('Energy :' , this.character.energy)
+                if (this.character.bottles < 5) {   
+                    this.character.bottles += 1;
+                    this.level.bottles.splice(index, 1);
+                }
+                this.statusBarBottle.setPercentageBottle(this.character.bottles);
+                console.log('Bottles:', this.character.bottles);
             }
         })
     }
