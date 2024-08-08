@@ -31,7 +31,9 @@ class World {
     run() {
         setInterval(() => {
            this.checkCollisions(); 
-           this.checkThrowObjects(); 
+           this.checkThrowObjects();
+           this.collectCoins(); 
+           this.collectBottles();
         }, 200);
     }
 
@@ -57,6 +59,30 @@ class World {
     }
 
 
+    collectCoins(){
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                console.log('Colission Detected', coin);
+                this.character.hit();
+                this.statusBarHealth.setPercentage(this.character.energy)
+                console.log('Energy :' , this.character.energy)
+            }
+        })
+    }
+
+
+    collectBottles(){
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                console.log('Colission Detected', bottle);
+                this.character.hit();
+                this.statusBarHealth.setPercentage(this.character.energy)
+                console.log('Energy :' , this.character.energy)
+            }
+        })
+    }
+
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -65,6 +91,8 @@ class World {
         this.addToMap(this.character);
 
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles) ;
         this.addObjectsToMap(this.throwableObject);
         
         this.ctx.translate(-this.camera_x, 0);

@@ -26,7 +26,7 @@ class MovableObject extends DrawableObject {
 
 
     // Bessere Formel zur Kollisionsberechnung (Genauer)
-isColliding (obj) {
+    isColliding (obj) {
     
     return  (this.x + this.width - this.offset.right) >= (obj.x + obj.offset.left) &&   //Pepe rechts von Chicken
     (this.x + this.offset.left) <= (obj.x + obj.width - obj.offset.right) &&    //Pepe links von Chicken
