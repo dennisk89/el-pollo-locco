@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
+let lastMove = 1;
 
 function init(){
     canvas = document.getElementById('canvas');
@@ -9,6 +9,7 @@ function init(){
     
     console.log('My Character is', world.character)
 }
+
 
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
@@ -49,5 +50,7 @@ window.addEventListener('keyup', (e) => {
     }
     if (e.keyCode == 68) {
         keyboard.D = false;
-    }
+    } 
+    
+    lastMove = new Date().getTime();
 });

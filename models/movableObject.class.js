@@ -36,7 +36,13 @@ class MovableObject extends DrawableObject {
     (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom)
              // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
-}
+    }
+
+   // TODO funktioniert noch nicht
+    chickenHit(obj) {
+        (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top);
+        console.log('chicken Hit on top')
+    }
 
 
     hit() {
@@ -51,7 +57,7 @@ class MovableObject extends DrawableObject {
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
+        timepassed = timepassed / 200;
         return timepassed < 1;
     }
 
