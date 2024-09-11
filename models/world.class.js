@@ -9,6 +9,7 @@ class World {
     statusBarBottle = new StatusbarBottle();
     statusBarCoin = new StatusbarCoin();
     throwableObject = [];
+    
 
 
 
@@ -23,6 +24,7 @@ class World {
         this.run();
         this.canThrow = true;
         this.setupThrowObjectInterval();
+        this.lastThrownBottle = null;
     }
 
 
@@ -33,7 +35,7 @@ class World {
 
     setupThrowObjectInterval() {
         setInterval(() => {
-            if (this.keyboard.D && this.canThrow) { // SPACE als Beispiel für die Wurftaste
+            if (this.keyboard.D && this.canThrow) { 
                 this.checkThrowObjects();
                 this.canThrow = false;
             } else if (!this.keyboard.D) {
@@ -48,18 +50,18 @@ class World {
             this.checkCollisions();
             this.collectCoins();
             this.collectBottles();
+            // this.checkBottleHit();
         }, 50);
     }
 
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottles > 0) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x, this.character.y + 100, this.character.otherDirection, this.character);
             this.throwableObject.push(bottle);
+            this.lastThrownBottle = bottle;
             this.character.bottles--;
             this.statusBarBottle.setPercentageBottle(this.character.bottles);
-            
-
         }
     }
 
@@ -76,6 +78,18 @@ class World {
     }
 
 
+    // checkBottleHit() {
+    //     if (this.lastThrownBottle) {
+    //         this.level.enemies.forEach((enemy) => {
+    //             if (this.lastThrownBottle.isColliding(enemy)) {
+    //                 console.log('Bottle HIT detected', enemy);
+    //                 // Hier kannst du zusätzliche Logik hinzufügen, um den Feind zu behandeln
+    //             }
+    //         });
+    //     }
+    // }
+
+
     collectCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
@@ -85,7 +99,6 @@ class World {
                     this.level.coins.splice(index, 1);
                 }
                 this.statusBarCoin.setPercentageCoin(this.character.coins)
-                console.log('Energy :', this.character.energy)
             }
         })
     }

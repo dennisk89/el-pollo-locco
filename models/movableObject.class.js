@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     bottles = 0;
     coins = 0;
+    
 
     applyGravity() {
         setInterval(() => {
@@ -91,6 +92,11 @@ class MovableObject extends DrawableObject {
     jump() {
         this.currentImage = 0;
         this.speedY = 30;
+    }
+
+    updateLastMoveTime() {
+        this.lastMove = new Date().getTime(); // Aktualisiere den letzten Bewegungszeitpunkt
+        console.log(this.lastMove)
     }
 
 

@@ -16,14 +16,15 @@ class ThrowableObject extends MovableObject {
 
     throwBottle_sound = new Audio('audio/throwBottle.mp3')
 
-    constructor(x, y, otherDirection) {
+    constructor(x, y, otherDirection, character) {
         super().loadImage('img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-        this.x = x;
-        this.y = y;
+        this.initialX = x; // Speichere die Startposition
+        this.initialY = y;
         this.height = 80;
         this.width = 60;
+        this.character = character;
         this.otherDirection = otherDirection; // Nutze die Blickrichtung des Charakters
-        
+        this.updateLastMoveTime();
         this.loadImages(this.IMAGES_BOTTLEROTATION);
         this.loadImages(this.IMAGES_BOTTLESPLASH);
         this.throw(x, y);
@@ -39,18 +40,21 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         this.throwBottle_sound.play();
-        
-        if (this.otherDirection) {
-            this.x -= 100;
+        if (this.character) {
+            this.character.onThrow();
         }
+
+        if (!this.otherDirection) {
+            this.x = this.initialX + 100; // Setze die Startposition um 100 Pixel nach links versetzt
+        } 
     
         setInterval(() => {
             if (this.otherDirection) {
-                // Bewegung nach links
                 this.x -= 15;
+                
             } else {
-                // Bewegung nach rechts
                 this.x += 15;
+                x += 100;
             }
         }, 50);
     }
