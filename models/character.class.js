@@ -74,6 +74,8 @@ class Character extends MovableObject {
     ];
     
     walking_sound = new Audio('audio/walking.mp3')
+    jump_sound = new Audio('audio/jump.mp3')
+    
 
     constructor() {
         super().loadImage(this.startImage);
@@ -155,6 +157,7 @@ class Character extends MovableObject {
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.jump_sound.play();
                 this.playJumpAnimationOnce();
                 this.isJumpAnimationPlayed = true;
                 moved = true;
@@ -187,7 +190,7 @@ setInterval(() => {
     }
 }, 150);
 
-// Funktion zur Steuerung der Hurt-Animation
+
 
 }
  

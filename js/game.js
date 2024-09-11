@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let lastMove = 1;
+
 
 function init(){
     canvas = document.getElementById('canvas');
@@ -52,5 +52,4 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false;
     } 
     
-    lastMove = new Date().getTime();
 });

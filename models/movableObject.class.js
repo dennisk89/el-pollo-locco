@@ -39,10 +39,13 @@ class MovableObject extends DrawableObject {
     }
 
    // TODO funktioniert noch nicht
-    chickenHit(obj) {
-        (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top);
-        console.log('chicken Hit on top')
+   chickenHit(obj) {
+    if (this.y + this.height - this.offset.bottom >= obj.y + obj.offset.top) {
+        console.log('Chicken hit on top');
+        // Additional logic for what happens when a chicken is hit.
+        this.energy -= 10; // Example of reducing energy
     }
+}
 
 
     hit() {

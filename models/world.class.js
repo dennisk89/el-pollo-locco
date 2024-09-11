@@ -9,9 +9,10 @@ class World {
     statusBarBottle = new StatusbarBottle();
     statusBarCoin = new StatusbarCoin();
     throwableObject = [];
-    
-    
-    
+
+
+
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -20,6 +21,8 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.canThrow = true;
+        this.setupThrowObjectInterval();
     }
 
 
@@ -28,38 +31,52 @@ class World {
     }
 
 
+    setupThrowObjectInterval() {
+        setInterval(() => {
+            if (this.keyboard.D && this.canThrow) { // SPACE als Beispiel für die Wurftaste
+                this.checkThrowObjects();
+                this.canThrow = false;
+            } else if (!this.keyboard.D) {
+                this.canThrow = true;
+            }
+        }, 50); // Kürzeres Intervall, um auf schnelle Tastendrücke zu reagieren
+    }
+
+
     run() {
         setInterval(() => {
-           this.checkCollisions(); 
-           this.checkThrowObjects();
-           this.collectCoins(); 
-           this.collectBottles();
-        }, 200);
+            this.checkCollisions();
+            this.collectCoins();
+            this.collectBottles();
+        }, 50);
     }
 
 
     checkThrowObjects() {
-        if(this.keyboard.D) {
-            console.log('Taste D wurde gedrückt')
+        if (this.keyboard.D && this.character.bottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
+            this.character.bottles--;
+            this.statusBarBottle.setPercentageBottle(this.character.bottles);
+            
+
         }
     }
 
 
-    checkCollisions(){
+    checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 console.log('Colission Detected', enemy);
                 this.character.hit();
                 this.statusBarHealth.setPercentage(this.character.energy)
-                console.log('Energy :' , this.character.energy)
+                console.log('Energy :', this.character.energy)
             }
         })
     }
 
 
-    collectCoins(){
+    collectCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 console.log('Colission Detected', coin);
@@ -68,17 +85,16 @@ class World {
                     this.level.coins.splice(index, 1);
                 }
                 this.statusBarCoin.setPercentageCoin(this.character.coins)
-                console.log('Energy :' , this.character.energy)
+                console.log('Energy :', this.character.energy)
             }
         })
     }
 
 
-    collectBottles(){
+    collectBottles() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                console.log('Colission Detected', bottle);
-                if (this.character.bottles < 5) {   
+                if (this.character.bottles < 5) {
                     this.character.bottles += 1;
                     this.level.bottles.splice(index, 1);
                 }
@@ -98,15 +114,15 @@ class World {
 
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles) ;
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObject);
-        
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
         this.ctx.translate(this.camera_x, 0);
-        
+
         this.ctx.translate(-this.camera_x, 0);
 
         //draw wird immer wieder aufgerufen
