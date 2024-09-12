@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     bottles = 0;
     coins = 0;
-    
+
 
     applyGravity() {
         setInterval(() => {
@@ -20,33 +20,35 @@ class MovableObject extends DrawableObject {
 
 
     isAboveGround() {
-        if(this instanceof ThrowableObject){ // Throwable object should always fall
+        if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
-        }else {
-        return this.y < 100;
-    }
+        } else {
+            return this.y < 100;
+        }
     }
 
 
     // Bessere Formel zur Kollisionsberechnung (Genauer)
-    isColliding (obj) {
-    
-    return  (this.x + this.width - this.offset.right) >= (obj.x + obj.offset.left) &&   //Pepe rechts von Chicken
-    (this.x + this.offset.left) <= (obj.x + obj.width - obj.offset.right) &&    //Pepe links von Chicken
-    (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top) &&   //Pepe unterhalb von Chicken
-    (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom)
-             // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+    isColliding(obj) {
+
+        return (this.x + this.width - this.offset.right) >= (obj.x + obj.offset.left) &&   //Pepe rechts von Chicken
+            (this.x + this.offset.left) <= (obj.x + obj.width - obj.offset.right) &&    //Pepe links von Chicken
+            (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top) &&   //Pepe unterhalb von Chicken
+            (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom)
+        // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
     }
 
-   // TODO funktioniert noch nicht
-   chickenHit(obj) {
-    if (this.y + this.height - this.offset.bottom >= obj.y + obj.offset.top) {
-        console.log('Chicken hit on top');
-        // Additional logic for what happens when a chicken is hit.
-        this.energy -= 10; // Example of reducing energy
+    // TODO funktioniert noch nicht
+    chickenHitOnTop(obj) {
+        // Überprüfen, ob der Charakter überhaupt eine Kollision hat
+        if (this.isColliding(obj)) {
+            // Prüfen, ob der Charakter von oben auf den Gegner springt
+            return (this.y + this.height - this.offset.bottom) <= (obj.y + obj.offset.top + 15) 
+                  
+        }
+        return false;
     }
-}
 
 
     hit() {
@@ -96,7 +98,6 @@ class MovableObject extends DrawableObject {
 
     updateLastMoveTime() {
         this.lastMove = new Date().getTime(); // Aktualisiere den letzten Bewegungszeitpunkt
-        console.log(this.lastMove)
     }
 
 

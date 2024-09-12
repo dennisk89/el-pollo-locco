@@ -5,10 +5,10 @@ class SmallChicken extends MovableObject{
     speed = 0.4
 
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
-        top: 1,
-        left: 1,
-        right: 1,
-        bottom: 1
+        top: 10,
+        left: 10,
+        right: 10,
+        bottom: 10
     };
     IMAGES_WALKING = [
         'img_pollo_locco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
