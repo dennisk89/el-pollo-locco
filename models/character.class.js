@@ -9,8 +9,8 @@ class Character extends MovableObject {
 
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
         top: 140,
-        left: 20,
-        right: 30,
+        left: 40,
+        right: 40,
         bottom: 20
     };
 
@@ -72,7 +72,7 @@ class Character extends MovableObject {
         'img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img_pollo_locco/img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
-    
+
     walking_sound = new Audio('audio/walking.mp3')
     jump_sound = new Audio('audio/jump.mp3')
     
@@ -101,10 +101,10 @@ class Character extends MovableObject {
         if (!this.isJumping) {
             this.isJumping = true; // Setze den Sprungstatus
             this.currentImage = 0; // Setze das Bild zurück, um die Animation von vorne zu starten
-    
+
             let interval = setInterval(() => {
                 this.playAnimation(this.IMAGES_JUMPING); // Nutze die bestehende playAnimation Methode
-    
+
                 if (this.currentImage >= this.IMAGES_JUMPING.length) {
                     clearInterval(interval); // Stoppe die Animation, wenn alle Bilder durchlaufen sind
                     this.isJumping = false; // Setze den Sprungstatus zurück
@@ -112,9 +112,9 @@ class Character extends MovableObject {
             }, 110); // Passe die Dauer an, wie schnell die Bilder wechseln sollen
         }
     }
-    
-    
-    
+
+
+
 
     updateLastHitTime() {
         this.lastHit = new Date().getTime();
@@ -130,12 +130,12 @@ class Character extends MovableObject {
         this.lastMove = currentTime;    // Setze auch den letzten Bewegungszeitpunkt zurück
     }
 
-     startHurtAnimation() {
+    startHurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
     }
-    
+
     // Funktion zur Steuerung der Walking-Animation
-     startWalkingAnimation() {
+    startWalkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
@@ -145,7 +145,7 @@ class Character extends MovableObject {
         setInterval(() => {
             this.walking_sound.pause();
             let moved = false;
-    
+
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -165,37 +165,37 @@ class Character extends MovableObject {
                 this.isJumpAnimationPlayed = true;
                 moved = true;
             }
-    
+
             if (moved) {
                 this.updateLastMoveTime();
             }
-    
+
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
-    
+
         // Haupt-Update-Intervall
-setInterval(() => {
-    let timeSinceLastMove = new Date().getTime() - this.lastMove;
-    let timeSinceLastHit = new Date().getTime() - this.lastHit;
-    
-    if (this.isDead()) {
-        this.playAnimation(this.IMAGES_DEAD);
-    } else if (this.isHurt()) {
-        this.startHurtAnimation(); // Startet ein eigenes Intervall für Hurt
-    } else if (timeSinceLastMove > 5000 && timeSinceLastHit > 5000) {
-        this.playAnimation(this.IMAGES_SLEEPING);
-    } else if (timeSinceLastMove > 100) {
-        this.playAnimation(this.IMAGES_STANDING);
-    } else if (!this.isAboveGround()) {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.startWalkingAnimation(); // Startet ein eigenes Intervall für Walking
-        }
+        setInterval(() => {
+            let timeSinceLastMove = new Date().getTime() - this.lastMove;
+            let timeSinceLastHit = new Date().getTime() - this.lastHit;
+
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.startHurtAnimation(); // Startet ein eigenes Intervall für Hurt
+            } else if (timeSinceLastMove > 5000 && timeSinceLastHit > 5000) {
+                this.playAnimation(this.IMAGES_SLEEPING);
+            } else if (timeSinceLastMove > 100) {
+                this.playAnimation(this.IMAGES_STANDING);
+            } else if (!this.isAboveGround()) {
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.startWalkingAnimation(); // Startet ein eigenes Intervall für Walking
+                }
+            }
+        }, 150);
+
+
+
     }
-}, 150);
 
 
-
-}
- 
-    
 }

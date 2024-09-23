@@ -28,6 +28,7 @@ class MovableObject extends DrawableObject {
     }
 
 
+
     // Bessere Formel zur Kollisionsberechnung (Genauer)
     isColliding(obj) {
 
@@ -39,12 +40,14 @@ class MovableObject extends DrawableObject {
 
     }
 
+
     // TODO funktioniert noch nicht
     chickenHitOnTop(obj) {
         // Überprüfen, ob der Charakter überhaupt eine Kollision hat
         if (this.isColliding(obj)) {
             // Prüfen, ob der Charakter von oben auf den Gegner springt
-            return (this.y + this.height - this.offset.bottom) <= (obj.y + obj.offset.top + 15) 
+            this.isDead();
+            return (this.y + this.height - this.offset.bottom) <= (obj.y + obj.offset.top + 25) 
                   
         }
         return false;
@@ -94,11 +97,12 @@ class MovableObject extends DrawableObject {
     jump() {
         this.currentImage = 0;
         this.speedY = 30;
+        if(this.world) {
+            this.world.pauseRunFor(100);
+        }
     }
 
     updateLastMoveTime() {
         this.lastMove = new Date().getTime(); // Aktualisiere den letzten Bewegungszeitpunkt
     }
-
-
 }

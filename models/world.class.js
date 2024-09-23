@@ -9,6 +9,8 @@ class World {
     statusBarBottle = new StatusbarBottle();
     statusBarCoin = new StatusbarCoin();
     throwableObject = [];
+    isPaused = false;
+    statusBarEndboss;
 
 
 
@@ -51,12 +53,23 @@ class World {
 
     run() {
         setInterval(() => {
-            // this.checkCollisions();
-            this.collectCoins();
-            this.collectBottles();
-            // this.checkBottleHit();
-            this.checkEnemyHitOnTop()
-        }, 20);
+            if (!this.isPaused) { // Nur ausführen, wenn nicht pausiert
+                this.checkCollisions();
+                this.collectCoins();
+                this.collectBottles();
+                // this.checkBottleHit();
+                this.checkEnemyHitOnTop();
+                this.startEndboss()
+            }
+        }, 50); // Standardmäßiger Intervall von 50ms
+    }
+
+
+    pauseRunFor(duration) {
+        this.isPaused = true;
+        setTimeout(() => {
+            this.isPaused = false;
+        }, duration);
     }
 
 
@@ -73,20 +86,29 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            // Prüfen, ob der Charakter mit dem Gegner kollidiert
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy)
+                // Prüfen, ob der Charakter den Gegner von oben trifft
+                if (!this.character.chickenHitOnTop(enemy)) {
+                    // Nur Schaden zufügen, wenn nicht von oben getroffen
+                    this.character.hit();
+                    this.statusBarHealth.setPercentage(this.character.energy);
+                }
             }
-        })
+        });
     }
 
 
     checkEnemyHitOnTop() {
-        this.checkCollisions();
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.chickenHitOnTop(enemy)){
                 console.log('Jumped on Enemy!', enemy);
                 this.character.jump();
+                enemy.hit();
+                setTimeout(() => {
+                    this.level.enemies.splice(index, 1);   
+                }, 500);
+                
             }
         })
     }
@@ -144,6 +166,9 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
+        if (this.statusbarEndboss) {
+            this.addToMap(this.statusbarEndboss);
+        }
         this.ctx.translate(this.camera_x, 0);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -186,6 +211,17 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+
+    startEndboss(){
+        if(this.character.x > 1900 && !this.endboss && !this.statusbarEndboss){
+            this.endboss = new Endboss(); // Erstelle ein neues Endboss-Objekt
+            this.level.enemies.push(this.endboss);
+            this.statusbarEndboss = new StatusbarEndBoss;
+            this.addToMap(this.statusbarEndboss);
+        }
+    }
+
+    
 }
 
 
