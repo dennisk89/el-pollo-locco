@@ -3,7 +3,7 @@ class Character extends MovableObject {
     width = 150
     lastMove;
     lastHit;
-    y = 0
+    y = 10
     speed = 10
     startImage = 'img_pollo_locco/img/2_character_pepe/2_walk/W-21.png';
 

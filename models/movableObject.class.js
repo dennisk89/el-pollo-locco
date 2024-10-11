@@ -10,7 +10,7 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity() {
-        setInterval(() => {
+        this.applyGravity = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -41,7 +41,7 @@ class MovableObject extends DrawableObject {
     }
 
 
-    // TODO funktioniert noch nicht
+   
     chickenHitOnTop(obj) {
         // Überprüfen, ob der Charakter überhaupt eine Kollision hat
         if (this.isColliding(obj)) {

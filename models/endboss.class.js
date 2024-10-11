@@ -2,11 +2,12 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55
+    energy = 5
     
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
-        top: 10,
-        left: 10,
-        right: 10,
+        top: 100,
+        left: 30,
+        right: 100,
         bottom: 10
     };
     IMAGES_WALKING = [

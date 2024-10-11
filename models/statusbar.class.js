@@ -154,7 +154,7 @@ class StatusbarEndBoss extends DrawableObject {
         'img_pollo_locco/img/7_statusbars/2_statusbar_endboss/orange/orange100.png',
     ];
     
-    percentage = 0;
+    percentage = 5;
     
     constructor() {
         super();
@@ -164,13 +164,13 @@ class StatusbarEndBoss extends DrawableObject {
         this.y = 0;
         this.width = 200;
         this.height = 50;
-        this.setPercentageCoin(5);
+        this.setPercentageEndboss(5);
         
         
         
     }
 
-    setPercentageCoin(percentage) {
+    setPercentageEndboss(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_ENDBOSSBAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
