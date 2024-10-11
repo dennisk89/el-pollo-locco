@@ -10,8 +10,8 @@ class Bottle extends MovableObject {
 
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
         top: 15,
-        left: 25,
-        right: 25,
+        left: 35,
+        right: 35,
         bottom: 10
     };
     constructor(){

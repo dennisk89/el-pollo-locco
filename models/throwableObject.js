@@ -100,7 +100,7 @@ class ThrowableObject extends MovableObject {
     }
 
     bottleSplash() {
-        setInterval(() => {
+        this.bottleSplash = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLESPLASH); // Splash-Animation abspielen
             setTimeout(() => {
                 this.splashPlayed = true; // Animation abgeschlossen
@@ -112,7 +112,7 @@ class ThrowableObject extends MovableObject {
                 if (index > -1) {
                     this.character.world.throwableObject.splice(index, 1);
                 }
-    
+                clearInterval(this.bottleSplash);
             }, 200); // Animation dauert 500ms
         }, 30);
     }

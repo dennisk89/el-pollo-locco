@@ -2,7 +2,7 @@ class Chicken extends MovableObject {
     height = 100
     width = 100
     energy = 1
-    y = 360
+    y = 345
     speed = 0.15
 
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)

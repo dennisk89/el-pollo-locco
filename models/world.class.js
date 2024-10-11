@@ -62,7 +62,7 @@ class World {
                 this.checkEnemyHitOnTop();
                 this.startEndboss()
             }
-        }, 50); // Standardmäßiger Intervall von 50ms
+        }, 30); // Standardmäßiger Intervall von 50ms
     }
 
 
@@ -121,6 +121,7 @@ class World {
                 console.log('Bottle HIT detected', this.endboss);
                 this.endboss.hit();  // Den Endboss treffen
                 this.statusbarEndboss.setPercentageEndboss(this.endboss.energy);  // Statusbar aktualisieren
+                this.lastThrownBottle = null;
             }
         }
     }
@@ -214,7 +215,7 @@ class World {
 
     startEndboss(){
         if(this.character.x > 1900 && !this.endboss && !this.statusbarEndboss){
-            this.endboss = new Endboss(); // Erstelle ein neues Endboss-Objekt
+            this.endboss = new Endboss(this); // Erstelle ein neues Endboss-Objekt
             this.level.enemies.push(this.endboss);
             this.statusbarEndboss = new StatusbarEndBoss;
             this.addToMap(this.statusbarEndboss);

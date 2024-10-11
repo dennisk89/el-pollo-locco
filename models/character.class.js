@@ -88,7 +88,7 @@ class Character extends MovableObject {
         this.animate();
         this.applyGravity();
         this.lastMove = new Date().getTime();
-        this.updateLastMoveTime()
+        this.updateLastMoveTime();
         this.lastHit = 0;
     }
 
