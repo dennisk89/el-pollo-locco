@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55
-    energy = 5
+    energy = 100
     
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
         top: 100,
@@ -72,7 +72,7 @@ class Endboss extends MovableObject {
                     clearInterval(interval);
                     this.hurt = false;
                 }
-            }, 110); 
+            }, 210); 
             this.animate();
         }
     }

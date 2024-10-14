@@ -113,9 +113,6 @@ class Character extends MovableObject {
         }
     }
 
-
-
-
     updateLastHitTime() {
         this.lastHit = new Date().getTime();
     }
@@ -138,8 +135,6 @@ class Character extends MovableObject {
     startWalkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
     }
-
-
 
     animate() {
         setInterval(() => {

@@ -119,9 +119,10 @@ class World {
         if (this.lastThrownBottle && this.endboss) {  // Prüfen, ob die Bottle und der Endboss existieren
             if (this.lastThrownBottle.isColliding(this.endboss)) {  // Kollision zwischen Bottle und Endboss prüfen
                 console.log('Bottle HIT detected', this.endboss);
-                this.endboss.hit();  // Den Endboss treffen
+                this.endboss.endbossHit();  // Den Endboss treffen
                 this.statusbarEndboss.setPercentageEndboss(this.endboss.energy);  // Statusbar aktualisieren
                 this.lastThrownBottle = null;
+                console.log(this.endboss.energy)
             }
         }
     }

@@ -154,7 +154,7 @@ class StatusbarEndBoss extends DrawableObject {
         'img_pollo_locco/img/7_statusbars/2_statusbar_endboss/orange/orange100.png',
     ];
     
-    percentage = 5;
+    percentage = 100;
     
     constructor() {
         super();
@@ -164,10 +164,7 @@ class StatusbarEndBoss extends DrawableObject {
         this.y = 0;
         this.width = 200;
         this.height = 50;
-        this.setPercentageEndboss(5);
-        
-        
-        
+        this.setPercentageEndboss(100);
     }
 
     setPercentageEndboss(percentage) {
@@ -176,15 +173,15 @@ class StatusbarEndBoss extends DrawableObject {
         this.img = this.imageCache[path];
     }
     resolveImageIndex() {
-        if (this.percentage == 5) {
+        if (this.percentage == 100) {
             return 5;
-        } else if (this.percentage == 4) {
+        } else if (this.percentage == 80) {
             return 4;
-        } else if (this.percentage == 3) {
+        } else if (this.percentage == 60) {
             return 3;
-        } else if (this.percentage == 2) {
+        } else if (this.percentage == 40) {
             return 2;
-        } else if (this.percentage == 1) {
+        } else if (this.percentage == 20) {
             return 1;
         } else {
             return 0;
