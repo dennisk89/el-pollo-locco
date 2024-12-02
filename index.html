@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,15 +20,57 @@
     <script defer src="models/keyboard.class.js"></script>
     <script defer src="models/level.class.js"></script>
     <script defer src="models/endboss.class.js"></script>
-    
     <script defer src="models/throwableObject.js"></script>
-    
     <script defer src="levels/level1.js"></script>
     <script defer src="js/game.js"></script>
-    
+
 </head>
-<body onload="init()">
+
+<body onload="">
+
+    <div class="startscreen " id="startScreen">
+        <img class="start-button" onclick="startGame()"
+            src="./img_pollo_locco/img/icons8-schaltfläche-_wiedergabe_-eingekreist-48.png" alt="">
+
+    </div>
     <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
+    <div class="game-container">
+        
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="mobile-move-buttons">
+            <div>
+                <button class="mobile-buttons" id="btnLeft">Left</button>
+                <button class="mobile-buttons" id="btnRight">Right</button>
+            </div>
+            <div>
+                <button class="mobile-buttons">Sound</button>
+                <button class="mobile-buttons" id="btnRestart" onclick="restartGame()">Restart</button>
+            </div>
+            <div>
+                <button class="mobile-buttons" id="btnJump">Jump</button>
+                <button class="mobile-buttons" id="btnThrow">Throw</button>
+            </div>
+        </div>
+        <div class="instructions">
+            <div>Arrows = Walk </div>
+            <div>Space = Jump</div>
+            <div>D = Throw Bottle</div>
+            <div>Impressum</div>
+        </div>
+        <div class="win-game d-none" id="winScreen">
+            <div class="button button-win" id="restartButtonWin" onclick="restartGame()">Restart Game</div>
+            <div class="button button-win" onclick="backToStartScreen()">Back</div>
+        </div>
+
+        <div class="lost-game d-none" id="lostGame">
+            <div class="button-center">
+            <div class="button button-lost d-none" id="restartButtonLost" onclick="restartGame()">Restart Game</div>
+            <div class="button button-lost" onclick="backToStartScreen()">Back</div>
+        </div>
+        </div>
+    </div>
+
+    
 </body>
+
 </html>

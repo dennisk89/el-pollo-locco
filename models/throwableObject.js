@@ -82,7 +82,7 @@ class ThrowableObject extends MovableObject {
 
 
     checkBottleHitEndboss() {
-        if (this.isColliding(this.character.world.endboss) && !this.splashPlayed) { 
+        if (this.character.world.endboss && this.isColliding(this.character.world.endboss) && !this.splashPlayed) { 
             clearInterval(this.moveInterval); // Bewege die Flasche nicht mehr
             this.splashPlayed = true;
             return true;

@@ -175,6 +175,12 @@ class Character extends MovableObject {
 
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    document.getElementById('lostGame').classList.add('position-absolute');
+                    document.getElementById('restartButtonLost').classList.remove('d-none');
+                    document.getElementById('lostGame').style.display = 'flex';
+                    this.clearAllIntervals();
+                }, 800);
             } else if (this.isHurt()) {
                 this.startHurtAnimation(); // Startet ein eigenes Intervall für Hurt
             } else if (timeSinceLastMove > 5000 && timeSinceLastHit > 5000) {

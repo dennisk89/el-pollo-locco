@@ -114,4 +114,8 @@ class MovableObject extends DrawableObject {
     updateLastMoveTime() {
         this.lastMove = new Date().getTime(); // Aktualisiere den letzten Bewegungszeitpunkt
     }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+      }
 }

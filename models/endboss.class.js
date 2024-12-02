@@ -3,7 +3,9 @@ class Endboss extends MovableObject {
     width = 250;
     y = 55
     energy = 100
-    
+    attacking = false
+    alertOrAttackToggle = true
+
     offset = {      //Offset zur genauen Kollisionsprüfung (Offset wird von der ursprünglichen Bildgröße abgezogen!)
         top: 100,
         left: 30,
@@ -77,19 +79,83 @@ class Endboss extends MovableObject {
         }
     }
 
+    playAttackAnimationOnce() {
+        if (!this.attacking) {
+            this.attacking = true;
+            this.currentImage = 0;
+            
+            let interval = setInterval(() => {
+                this.playAnimation(this.IMAGES_ATTACK);
+                
+                if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                    clearInterval(interval);
+                    this.attacking = false;
+                }
+            }, 150);
+        }
+    }
+
+    playAlertAnimationOnce() {
+        if (!this.attacking) { // Sicherstellen, dass der Boss nicht gleichzeitig angreift
+            this.attacking = true;
+            this.currentImage = 0;
+            
+            let interval = setInterval(() => {
+                this.playAnimation(this.IMAGES_ALERT);
+                
+                if (this.currentImage >= this.IMAGES_ALERT.length) {
+                    clearInterval(interval);
+                    this.attacking = false;
+                }
+            }, 150);
+        }
+    }
+
+    playDeadAnimationOnce() {
+        
+            this.currentImage = 0;
+            
+            setInterval(() => {
+                this.playAnimation(this.IMAGES_DEAD);
+                
+                if (this.currentImage >= this.IMAGES_DEAD.length) {
+                    
+                }
+            }, 150);
+        
+    }
+
 
     animate() {
         this.animation = setInterval(() => {
             if (this.energy <= 0) {  // Prüfen, ob der Endboss tot ist
-                this.playAnimation(this.IMAGES_DEAD);
+                this.playDeadAnimationOnce();
+                setTimeout(() => {
+                    document.getElementById('winScreen').classList.add('position-absolute');
+                    document.getElementById('restartButtonWin').classList.remove('d-none');
+                    document.getElementById('winScreen').style.display = 'flex';
+                    this.clearAllIntervals();
+                }, 500);
+                    
+                
             } else if (this.isHurt()) {  // Prüfen, ob der Endboss verletzt ist
                 this.playHurtAnimationOnce();
                 clearInterval(this.animation)
             } else {  // Normales Laufen
                 this.playAnimation(this.IMAGES_WALKING);
-                this.speed = 1;
+                this.speed = 2;
                 this.moveLeft();
             }
         }, 300);
+        setInterval(() => {
+            if (!this.attacking && !this.hurt && this.energy > 0) {
+                if (this.alertOrAttackToggle) {
+                    this.playAttackAnimationOnce();
+                } else {
+                    this.playAlertAnimationOnce();
+                }
+                this.alertOrAttackToggle = !this.alertOrAttackToggle; // Umschalten zwischen Alert und Attack
+            }
+        }, 3000);
     }
 }

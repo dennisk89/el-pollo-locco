@@ -11,6 +11,7 @@ class World {
     throwableObject = [];
     isPaused = false;
     statusBarEndboss;
+    running = true;
     
 
 
@@ -221,6 +222,38 @@ class World {
             this.statusbarEndboss = new StatusbarEndBoss;
             this.addToMap(this.statusbarEndboss);
         }
+    }
+
+    resetGame() {
+        // 1. Animation stoppen
+        this.running = false; // Setzt das Flag, um die `draw`-Schleife zu stoppen
+        
+        // 2. Alle Intervals löschen
+        this.character.clearAllIntervals();
+        
+        // 3. Level und Spielstatus zurücksetzen
+        this.level = createLevel(); // Verwenden der neuen Funktion
+        this.character = new Character(); // Neuer Charakter
+        this.statusBarHealth.setPercentage(this.character.energy);
+        this.statusBarCoin.setPercentageCoin(this.character.coins);
+        this.statusBarBottle.setPercentageBottle(this.character.bottles);
+        this.throwableObject = [];
+        this.endboss = null;
+        this.statusbarEndboss = null;
+        
+        // 4. Zeichenflächen leeren
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // 5. Spiel neu starten
+        this.startNewGame();
+    }
+
+    startNewGame() {
+        this.running = true; // Animation wieder starten
+        this.setWorld();
+        this.draw();
+        this.run();
+        this.setupThrowObjectInterval();
     }
 
     
